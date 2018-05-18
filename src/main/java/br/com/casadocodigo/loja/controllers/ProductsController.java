@@ -19,7 +19,7 @@ import br.com.casadocodigo.loja.models.Product;
 import br.com.casadocodigo.loja.validations.ProductValidator;
 
 @Controller
-@RequestMapping("products")
+@RequestMapping("/products")
 public class ProductsController {
 	
 	@Autowired
@@ -43,7 +43,7 @@ public class ProductsController {
 	}
 	
 	@RequestMapping("form")
-	public ModelAndView form(){
+	public ModelAndView form(Product product){
 		
 		ModelAndView modelAndView = new ModelAndView("products/form");
 		modelAndView.addObject("types", BookType.values());	
@@ -58,7 +58,7 @@ public class ProductsController {
 	public ModelAndView save(@Valid Product product,BindingResult bindingResult,RedirectAttributes attrs){
 		
 		if (bindingResult.hasErrors()){
-			return form();
+			return form(product);
 		}
 		
 		

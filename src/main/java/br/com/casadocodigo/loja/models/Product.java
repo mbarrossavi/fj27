@@ -1,6 +1,7 @@
 package br.com.casadocodigo.loja.models;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.ElementCollection;
@@ -9,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Product {
@@ -20,6 +23,18 @@ public class Product {
 	@ElementCollection
 	private List<Price> prices = new ArrayList<Price>();
 	
+	@DateTimeFormat
+	private Calendar releaseDate;
+	
+	
+	public Calendar getReleaseDate() {
+		return releaseDate;
+	}
+
+	public void setReleaseDate(Calendar releaseDate) {
+		this.releaseDate = releaseDate;
+	}
+
 	public List<Price> getPrices() {
 		return prices;
 	}
