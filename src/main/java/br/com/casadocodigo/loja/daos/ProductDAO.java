@@ -27,6 +27,13 @@ public class ProductDAO {
 		manager.persist(product);
 		
 	}
+
+	public Product find(Integer id) {
+		
+		// TODO Auto-generated method stub
+		return manager.createQuery("select distinct(p) from Product p join fetch p.prices where p.id = :id",
+				Product.class).setParameter("id", id).getSingleResult();
+	}
 	
 
 }

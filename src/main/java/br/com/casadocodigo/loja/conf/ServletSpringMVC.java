@@ -1,4 +1,6 @@
 package br.com.casadocodigo.loja.conf;
+import javax.servlet.FilterRegistration.Dynamic;
+import javax.servlet.MultipartConfigElement;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -22,6 +24,12 @@ public class ServletSpringMVC extends AbstractAnnotationConfigDispatcherServletI
 	protected String[] getServletMappings() {
 		// TODO Auto-generated method stub
 		return new String[]{"/"};
+	}
+	
+	@Override
+	protected void customizeRegistration(javax.servlet.ServletRegistration.Dynamic registration) {
+		
+		registration.setMultipartConfig(new MultipartConfigElement(""));
 	}
 
 }

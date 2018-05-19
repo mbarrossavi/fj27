@@ -17,7 +17,8 @@
 	
 	
 	
-	<form:form action="${spring:mvcUrl('PC#save').build()}" method="post" commandName="product">
+	<form:form action="${spring:mvcUrl('PC#save').build()}" method="post"
+	 commandName="product" enctype="multipart/form-data">
 	
 		<div>
 		 <label for="title">Título</label>
@@ -49,6 +50,14 @@
 		
 		<div>
 		
+			<label for="summary">Sumário do livro</label>
+			<input type="file" name="summary" id="summary"/>
+			<form:errors path="summaryPath"/>
+		
+		</div>
+		
+		<div>
+		
 			<c:forEach items="${types}" var="bookType" varStatus="status" >			
 				<div>
 				
@@ -63,6 +72,8 @@
 			</c:forEach>
 		
 		</div>
+		
+		
 		
 			<input type="submit" value="Enviar" />
 		<div>

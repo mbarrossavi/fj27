@@ -26,7 +26,17 @@ public class Product {
 	@DateTimeFormat
 	private Calendar releaseDate;
 	
+	private String summaryPath;
 	
+	
+	public String getSummaryPath() {
+		return summaryPath;
+	}
+
+	public void setSummaryPath(String summaryPath) {
+		this.summaryPath = summaryPath;
+	}
+
 	public Calendar getReleaseDate() {
 		return releaseDate;
 	}
