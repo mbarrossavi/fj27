@@ -6,32 +6,45 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import br.com.casadocodigo.loja.daos.UserDao;
 
-@EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
-	
+@EnableWebMvcSecurity
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
 	@Autowired
 	private UserDao users;
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {		
 		http.authorizeRequests()
-		.antMatchers("/product/form").hasRole("ADMIN")
+		.antMatchers("/products/form**").hasRole("ADMIN")
 		.antMatchers("/shopping/**").permitAll()
-		.antMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
+		.antMatchers(HttpMethod.POST, "/products**").hasRole("ADMIN")
 		.antMatchers("products").permitAll()
 		.anyRequest().authenticated()
-		.and().formLogin();
+		.and()
+		.formLogin().loginPage("/login")
+		.defaultSuccessUrl("/products")
+		.permitAll()
+		.and()
+		.logout()
+		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+		.logoutSuccessUrl("/login")
+		.permitAll()
+		.and()
+		.exceptionHandling()
+		.accessDeniedPage("/WEB-INF/views/403.jsp");		
 		
-	}	
-	
-	protected void configure (AuthenticationManagerBuilder auth) throws Exception {
-		
+	}
+
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
 		auth.userDetailsService(users).passwordEncoder(new BCryptPasswordEncoder());
-		
+
 	}
 
 }
